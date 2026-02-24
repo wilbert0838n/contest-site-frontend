@@ -8,14 +8,14 @@ export default function Navbar({ isLoggedIn, username, onLogout, onAuthClick }) 
         
         {/* Logo Section */}
         <div className="flex items-center gap-3 cursor-pointer group">
-          <div className="bg-gradient-to-br from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 p-2.5 rounded-xl shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform duration-300">
+          <div className="bg-linear-to-br from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 p-2.5 rounded-xl shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform duration-300">
             <TerminalSquare className="text-white" size={24} strokeWidth={2.5} />
           </div>
           
           <div>
             {/* Text gradient flips to lighter, glowing blues in dark mode */}
-            <h1 className="text-2xl font-extrabold bg-gradient-to-r from-slate-900 via-blue-800 to-indigo-900 dark:from-white dark:via-blue-200 dark:to-indigo-300 bg-clip-text text-transparent tracking-tight">
-              Contesting
+            <h1 className="text-4xl font-extrabold bg-linear-to-r from-slate-900 via-blue-800 to-indigo-900 dark:from-white dark:via-blue-200 dark:to-indigo-300 bg-clip-text text-transparent tracking-tight">
+              ComputeX
             </h1>
             <p className="text-slate-500 dark:text-slate-400 text-[11px] font-bold tracking-widest uppercase">
               Competitive Platform

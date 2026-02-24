@@ -54,7 +54,7 @@ const files = [
 const features = [
   {
     Icon: TerminalIcon,
-    name: "The Code Arena",
+    name: "The ComputeX",
     description: "Write, test, and execute your logic in our high-performance IDE with instant console feedback.",
     href: "#",
     cta: "Enter Arena",

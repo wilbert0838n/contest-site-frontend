@@ -5,12 +5,10 @@ import { API_BASE_URL } from '../../../config';
 export default function HackingView({ submission, onBack }) {
   const [hackTest, setHackTest] = useState('');
 
-  // 1. State for the full data (code, etc.)
   const [fullSubmission, setFullSubmission] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // 2. Fetch the Code when component mounts
   useEffect(() => {
     if (!submission?.id) return;
 
@@ -34,7 +32,6 @@ export default function HackingView({ submission, onBack }) {
   }, [submission]);
 
   const handleHack = () => {
-    // API Call for hacking would go here
     alert(`Hacking attempt submitted for Submission #${submission.id}`);
     onBack();
   };
@@ -42,7 +39,6 @@ export default function HackingView({ submission, onBack }) {
   return (
     <div className="flex flex-col h-full animate-in fade-in zoom-in-95 duration-500">
       
-      {/* Top Control Bar */}
       <div className="flex items-center justify-between mb-8">
         <button
             onClick={onBack}
@@ -60,10 +56,9 @@ export default function HackingView({ submission, onBack }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
 
-        {/* LEFT PANE: Target Source Code */}
+    
         <div className="bg-white/70 backdrop-blur-xl border border-white/50 rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col h-[80vh]">
-          
-          {/* Header */}
+       
           <div className="p-6 border-b border-slate-100 bg-white/50 shrink-0">
             <div className="flex justify-between items-start mb-4">
               <div>
@@ -75,7 +70,7 @@ export default function HackingView({ submission, onBack }) {
               </div>
             </div>
 
-            {/* Target Meta Stats */}
+          
             <div className="flex flex-wrap items-center gap-3 text-xs font-semibold">
               <span className="bg-blue-50 text-blue-700 px-3 py-1.5 rounded-lg border border-blue-100 flex items-center gap-1.5">
                 <div className="w-5 h-5 rounded-full bg-blue-200 flex items-center justify-center text-[10px]">{submission.username.charAt(0).toUpperCase()}</div>
@@ -93,9 +88,9 @@ export default function HackingView({ submission, onBack }) {
             </div>
           </div>
 
-          {/* Code Inspector */}
+          
           <div className="flex-1 flex flex-col bg-slate-950 relative overflow-hidden">
-            {/* Mac-style window header */}
+            
             <div className="h-10 bg-slate-900 border-b border-white/10 flex items-center px-4 shrink-0 justify-between">
               <div className="flex gap-2">
                 <div className="w-3 h-3 rounded-full bg-rose-500/80"></div>
@@ -119,13 +114,13 @@ export default function HackingView({ submission, onBack }) {
                 </div>
               ) : (
                 <div className="flex min-h-full">
-                  {/* Faux Line Numbers */}
+                  
                   <div className="w-12 bg-slate-900/50 border-r border-white/5 flex flex-col items-end py-4 pr-3 text-xs font-mono text-slate-600 select-none">
                     {fullSubmission?.code?.split('\n').map((_, i) => (
                       <span key={i} className="leading-relaxed">{i + 1}</span>
                     ))}
                   </div>
-                  {/* The Actual Code */}
+                  
                   <pre className="p-4 text-slate-300 text-[13px] font-mono leading-relaxed whitespace-pre overflow-x-auto">
                     {fullSubmission?.code}
                   </pre>
@@ -135,7 +130,7 @@ export default function HackingView({ submission, onBack }) {
           </div>
         </div>
 
-        {/* RIGHT PANE: Hacking Interface */}
+        
         <div className="bg-white rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] ring-1 ring-slate-200/60 overflow-hidden flex flex-col h-[80vh]">
           
           <div className="p-8 bg-gradient-to-br from-amber-50 to-rose-50 border-b border-amber-100 shrink-0">
@@ -152,7 +147,7 @@ export default function HackingView({ submission, onBack }) {
 
           <div className="p-6 flex-1 flex flex-col gap-6 bg-slate-50/30 overflow-y-auto">
             
-            {/* Input Area */}
+            
             <div className="flex-1 flex flex-col">
               <label className="block text-xs font-extrabold text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></div>
@@ -166,7 +161,7 @@ export default function HackingView({ submission, onBack }) {
               />
             </div>
 
-            {/* Submit Button */}
+            
             <button
               onClick={handleHack}
               disabled={!hackTest.trim()}
@@ -177,7 +172,6 @@ export default function HackingView({ submission, onBack }) {
               <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-black/10 pointer-events-none"></div>
             </button>
 
-            {/* Rules Card */}
             <div className="p-5 bg-white border border-slate-200 rounded-2xl shadow-sm">
               <h4 className="font-extrabold text-slate-800 mb-3 flex items-center gap-2 text-sm">
                 <ShieldAlert size={16} className="text-slate-400" /> Protocol Rules:

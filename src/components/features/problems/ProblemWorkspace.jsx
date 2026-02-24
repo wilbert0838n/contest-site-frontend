@@ -87,7 +87,7 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
     return (
         <div className="flex flex-col h-full animate-in fade-in zoom-in-95 duration-500">
             
-            {/* Top Control Bar */}
+          
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
                 <button
                     onClick={onBack}
@@ -121,13 +121,13 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
                 </div>
             </div>
 
-            {/* View 1: Workspace Split-Pane */}
+            
             {activeTab === 'problem' && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                     
-                    {/* LEFT PANE: Problem Description */}
+                  
                     <div className="bg-white rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] ring-1 ring-slate-200/60 overflow-hidden flex flex-col h-[80vh]">
-                        {/* Header Area */}
+                        
                         <div className="p-6 border-b border-slate-100 shrink-0">
                             <div className="flex justify-between items-start mb-4">
                                 <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
@@ -138,7 +138,7 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
                                 </button>
                             </div>
                             
-                            {/* Meta Stats */}
+                          
                             <div className="flex flex-wrap items-center gap-3 text-xs font-semibold mb-4">
                                 <span className={`px-3 py-1.5 rounded-lg border ${getAccuracyColor(problem?.accuracy || 0)}`}>
                                     🎯 Accuracy: {problem?.accuracy || 0}%
@@ -151,7 +151,7 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
                                 </span>
                             </div>
 
-                            {/* Faux Tags */}
+                         
                             <div className="flex flex-wrap gap-2">
                                 <span className="bg-blue-50 text-blue-700 text-[11px] font-bold px-2.5 py-1 rounded-md">Data Structures</span>
                                 <span className="bg-indigo-50 text-indigo-700 text-[11px] font-bold px-2.5 py-1 rounded-md">Algorithms</span>
@@ -159,7 +159,6 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
                             </div>
                         </div>
 
-                        {/* Scrollable Content */}
                         <div className="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-8 bg-slate-50/30">
                             <section>
                                 <p className="text-slate-700 leading-relaxed font-medium text-[15px]">{problem.description}</p>
@@ -211,7 +210,7 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
                             </section>
                         </div>
 
-                        {/* Problem Footer / Action Bar */}
+           
                         <div className="p-4 border-t border-slate-100 bg-white shrink-0 flex items-center justify-between">
                             <div className="flex items-center gap-1">
                                 <button className="flex items-center gap-1.5 p-2 hover:bg-slate-50 text-slate-500 hover:text-emerald-600 rounded-lg transition-colors text-sm font-semibold">
@@ -227,9 +226,7 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
                         </div>
                     </div>
 
-                    {/* RIGHT PANE: Code Editor */}
                     <div className="bg-white rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] ring-1 ring-slate-200/60 overflow-hidden flex flex-col h-[80vh]">
-                        {/* IDE Top Toolbar */}
                         <div className="p-3 border-b border-slate-100 bg-slate-50/50 shrink-0 flex justify-between items-center">
                             <div className="flex items-center gap-3 pl-2">
                                 <Terminal size={18} className="text-blue-600" />
@@ -244,7 +241,6 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
                                 </select>
                             </div>
                             
-                            {/* IDE Actions */}
                             <div className="flex items-center gap-1 pr-2">
                                 <button className="p-2 hover:bg-white border border-transparent hover:border-slate-200 rounded-lg text-slate-400 hover:text-slate-700 transition-all shadow-sm">
                                     <RotateCcw size={16} />
@@ -258,9 +254,7 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
                             </div>
                         </div>
 
-                        {/* Editor Area with Faux Gutter */}
                         <div className="flex-1 flex bg-slate-50/30 overflow-hidden relative">
-                            {/* Faux Line Numbers (Just visual detail) */}
                             <div className="w-12 bg-slate-50 border-r border-slate-100 flex flex-col items-end py-6 pr-3 text-xs font-mono text-slate-300 select-none hidden sm:flex">
                                 <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
                             </div>
@@ -274,7 +268,6 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
                             />
                         </div>
 
-                        {/* Editor Status Bar */}
                         <div className="px-4 py-1.5 bg-slate-50 border-t border-slate-100 shrink-0 flex justify-between items-center text-[10px] font-mono text-slate-400 uppercase tracking-widest">
                             <div className="flex gap-4">
                                 <span>UTF-8</span>
@@ -283,7 +276,6 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
                             <span>Ln 1, Col 1</span>
                         </div>
 
-                        {/* Run/Submit Footer */}
                         <div className="p-4 border-t border-slate-200 bg-white shrink-0 flex justify-between items-center">
                             <button className="text-slate-500 hover:text-slate-800 text-sm font-bold flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors">
                                 <Terminal size={16} /> Console
@@ -308,7 +300,7 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
                             </div>
                         </div>
 
-                        {/* Console Results (Slides up) */}
+                  
                         {testResults.length > 0 && (
                             <div className="border-t border-slate-200 bg-white max-h-[40%] overflow-y-auto custom-scrollbar animate-in slide-in-from-bottom-2 duration-300 shadow-[0_-20px_40px_rgba(0,0,0,0.08)]">
                                 <div className="p-4 border-b border-slate-100 flex items-center gap-3 bg-slate-50">
@@ -345,10 +337,9 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
                 </div>
             )}
 
-            {/* View 2: Submissions (Hacker Board) */}
             {activeTab === 'submissions' && (
                 <div className="bg-white rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] ring-1 ring-slate-200/60 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    {/* Header */}
+             
                     <div className="p-8 bg-gradient-to-br from-slate-50 to-blue-50/50 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-6">
                         <div>
                             <div className="flex items-center gap-3 mb-2">
@@ -362,7 +353,6 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
                             </p>
                         </div>
 
-                        {/* Faux Search & Filter Bar */}
                         <div className="flex items-center gap-3 w-full md:w-auto">
                             <div className="relative flex-1 md:w-64">
                                 <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
