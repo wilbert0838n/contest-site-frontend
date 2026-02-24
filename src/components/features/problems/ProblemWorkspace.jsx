@@ -1,56 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import { Play, Check, X, Users, Eye } from 'lucide-react';
+import { 
+    Play, Check, X, Users, Eye, ArrowLeft, Terminal, FileCode2, Zap, 
+    Settings, Maximize2, RotateCcw, ThumbsUp, ThumbsDown, Bookmark, 
+    Share2, Search, Filter, Send, Lightbulb
+} from 'lucide-react';
 import { problemData, successfulSubmissions } from '../../../data/mockData';
-import {API_BASE_URL} from '../../../config';
+import { API_BASE_URL } from '../../../config';
 
 export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, isLoggedIn, setIsLoggedIn, onShowAuth }) {
     const [activeTab, setActiveTab] = useState('problem');
     const [code, setCode] = useState('');
     const [language, setLanguage] = useState('CPP');
     const [isRunning, setIsRunning] = useState(false);
-    const [verdict, setVerdict] = useState(''); // <--- 1. NEW STATE
+    const [verdict, setVerdict] = useState('');
     const [testResults, setTestResults] = useState([]);
-    const [submissionList,setSubmissionsList] = useState([]);
-
-    // Inside ProblemWorkspace.jsx
+    const [submissionList, setSubmissionsList] = useState([]);
 
     useEffect(() => {
         if (activeTab === 'submissions' && isLoggedIn) {
-            // FETCH ONLY SUCCESSFUL ONES
             fetch(`${API_BASE_URL}/api/submissions/problem/${problem.id}/successful`, {
                 credentials: 'include'
             })
                 .then(res => res.json())
-                .then(data => setSubmissionsList(data));
+                .then(data => setSubmissionsList(data))
+                .catch(err => console.error("Error fetching submissions:", err));
         }
-    }, [activeTab, problem.id]);
+    }, [activeTab, problem.id, isLoggedIn]);
 
     const getCurrentUserId = () => {
         const userStr = localStorage.getItem('user');
         if (!userStr) return null;
         try {
-            const user = JSON.parse(userStr);
-            return user.id;
+            return JSON.parse(userStr).id;
         } catch (e) {
-            console.error("Error parsing user data", e);
             return null;
         }
     };
 
     const handleRun = async () => {
         if (!isLoggedIn) {
-            onShowAuth(); // Open the login modal
-            return;       // Stop the function here
+            onShowAuth();
+            return;
         }
 
-        const currentUserId = getCurrentUserId();
-
         setIsRunning(true);
-        setVerdict('Running...'); // Reset verdict while running
+        setVerdict('Compiling & Executing...');
         setTestResults([]);
 
         const payload = {
-            userId: currentUserId,
+            userId: getCurrentUserId(),
             problemId: problem.id,
             language: language,
             code: code
@@ -67,290 +65,369 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
             if (!response.ok) throw new Error("Server Error");
 
             const result = await response.text();
-
             setIsRunning(false);
-            // 2. UPDATE STATE WITH REAL DATA
             setVerdict(result);
 
             const isSuccess = result === "Accepted" || result === "All Testcase Passed";
-
-            setTestResults([{
-                id: "System Test",
-                passed: isSuccess,
-                time: '0.1s',
-                memory: 'N/A'
-            }]);
+            setTestResults([{ id: "System Test", passed: isSuccess, time: '0.1s', memory: '12 MB' }]);
 
         } catch (error) {
-            console.error("FULL ERROR DETAILS:", error);
-
             setIsRunning(false);
-            setVerdict("System Error"); // Set verdict on error
-            setTestResults([{
-                id: "Error",
-                passed: false,
-                time: '-',
-                memory: '-'
-            }]);
+            setVerdict("System Error");
+            setTestResults([{ id: "Error", passed: false, time: '-', memory: '-' }]);
         }
     };
 
     const getAccuracyColor = (accuracy) => {
-        if (accuracy >= 70) return 'text-green-600';
-        if (accuracy >= 50) return 'text-yellow-600';
-        return 'text-red-600';
+        if (accuracy >= 70) return 'text-emerald-700 bg-emerald-50 border-emerald-200';
+        if (accuracy >= 50) return 'text-amber-700 bg-amber-50 border-amber-200';
+        return 'text-rose-700 bg-rose-50 border-rose-200';
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Workspace Header */}
-            <div className="bg-blue-600 text-white p-4 shadow-md">
-                <div className="max-w-7xl mx-auto flex justify-between items-center">
-                    <div>
-                        <h1 className="text-2xl font-bold">CodeArena</h1>
-                        <p className="text-blue-100 text-sm">Competitive Programming Platform</p>
-                    </div>
+        <div className="flex flex-col h-full animate-in fade-in zoom-in-95 duration-500">
+            
+            {/* Top Control Bar */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+                <button
+                    onClick={onBack}
+                    className="group flex items-center gap-2 text-slate-500 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-200 px-5 py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow"
+                >
+                    <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+                    <span className="font-bold text-sm tracking-wide">Arena Overview</span>
+                </button>
+
+                <div className="bg-white border border-slate-200 rounded-xl p-1 inline-flex shadow-sm w-full sm:w-auto">
                     <button
-                        onClick={onBack}
-                        className="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded transition-colors"
+                        onClick={() => setActiveTab('problem')}
+                        className={`flex-1 sm:flex-none flex justify-center items-center gap-2 px-6 py-2 rounded-lg text-sm font-bold transition-all duration-300 ${
+                            activeTab === 'problem'
+                                ? 'bg-slate-900 text-white shadow-md scale-[1.02]'
+                                : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
+                        }`}
                     >
-                        ← Back to Problems
+                        <FileCode2 size={16} /> Workspace
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('submissions')}
+                        className={`flex-1 sm:flex-none flex justify-center items-center gap-2 px-6 py-2 rounded-lg text-sm font-bold transition-all duration-300 ${
+                            activeTab === 'submissions'
+                                ? 'bg-slate-900 text-white shadow-md scale-[1.02]'
+                                : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
+                        }`}
+                    >
+                        <Users size={16} /> Submissions <span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full text-xs ml-1">{submissionList.length}</span>
                     </button>
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto p-6">
-                {/* Tab Navigation */}
-                <div className="bg-white rounded-lg shadow-md mb-4">
-                    <div className="flex border-b">
-                        <button
-                            onClick={() => setActiveTab('problem')}
-                            className={`px-6 py-3 font-semibold transition-colors ${activeTab === 'problem'
-                                ? 'text-blue-600 border-b-2 border-blue-600'
-                                : 'text-gray-600 hover:text-gray-800'
-                                }`}
-                        >
-                            Problem
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('submissions')}
-                            className={`flex items-center gap-2 px-6 py-3 font-semibold transition-colors ${activeTab === 'submissions'
-                                ? 'text-blue-600 border-b-2 border-blue-600'
-                                : 'text-gray-600 hover:text-gray-800'
-                                }`}
-                        >
-                            <Users size={18} />
-                            Submissions ({submissionList.length})
-                        </button>
-                    </div>
-                </div>
-
-                {/* View 1: Problem Description & Editor */}
-                {activeTab === 'problem' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        {/* Left Column: Problem Details */}
-                        <div className="bg-white rounded-lg shadow-md p-6 overflow-auto" style={{ maxHeight: '85vh' }}>
-                            <div className="mb-4">
-                                <h2 className="text-2xl font-bold text-gray-800 mb-2">{problem.problemName || problemData.title}</h2>
-                                <div className="flex gap-4 text-sm text-gray-600 mb-2">
-                                    <span>Time limit: {problemData.timeLimit}</span>
-                                    <span>Memory limit: {problemData.memoryLimit}</span>
-                                </div>
-                                <div className="flex items-center gap-2 text-sm">
-                                    <span className={`font-semibold ${getAccuracyColor(problem?.accuracy || 0)}`}>
-                                        Accuracy: {problem?.accuracy || 0}%
-                                    </span>
-                                    <span className="text-gray-500">
-                                        ({problem?.solved || 0} / {problem?.total || 0} submissions)
-                                    </span>
-                                </div>
+            {/* View 1: Workspace Split-Pane */}
+            {activeTab === 'problem' && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    
+                    {/* LEFT PANE: Problem Description */}
+                    <div className="bg-white rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] ring-1 ring-slate-200/60 overflow-hidden flex flex-col h-[80vh]">
+                        {/* Header Area */}
+                        <div className="p-6 border-b border-slate-100 shrink-0">
+                            <div className="flex justify-between items-start mb-4">
+                                <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+                                    {problem.problemName || problemData.title}
+                                </h2>
+                                <button className="p-2 hover:bg-slate-50 text-slate-400 hover:text-amber-500 rounded-xl transition-colors">
+                                    <Bookmark size={20} />
+                                </button>
+                            </div>
+                            
+                            {/* Meta Stats */}
+                            <div className="flex flex-wrap items-center gap-3 text-xs font-semibold mb-4">
+                                <span className={`px-3 py-1.5 rounded-lg border ${getAccuracyColor(problem?.accuracy || 0)}`}>
+                                    🎯 Accuracy: {problem?.accuracy || 0}%
+                                </span>
+                                <span className="bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg border border-slate-200">
+                                    ⏱ {problemData.timeLimit}
+                                </span>
+                                <span className="bg-slate-50 text-slate-600 px-3 py-1.5 rounded-lg border border-slate-200">
+                                    💾 {problemData.memoryLimit}
+                                </span>
                             </div>
 
-                            <div className="space-y-6">
-                                <div>
-                                    <h3 className="text-lg font-semibold text-gray-800 mb-2">Problem Statement</h3>
-                                    <p className="text-gray-700 leading-relaxed">{problem.description}</p>
-                                </div>
+                            {/* Faux Tags */}
+                            <div className="flex flex-wrap gap-2">
+                                <span className="bg-blue-50 text-blue-700 text-[11px] font-bold px-2.5 py-1 rounded-md">Data Structures</span>
+                                <span className="bg-indigo-50 text-indigo-700 text-[11px] font-bold px-2.5 py-1 rounded-md">Algorithms</span>
+                                <span className="bg-slate-100 text-slate-600 text-[11px] font-bold px-2.5 py-1 rounded-md">Logic</span>
+                            </div>
+                        </div>
 
-                                <div>
-                                    <h3 className="text-lg font-semibold text-gray-800 mb-2">Input Format</h3>
-                                    <p className="text-gray-700 leading-relaxed whitespace-pre-line">{problem.inputFormat}</p>
-                                </div>
+                        {/* Scrollable Content */}
+                        <div className="p-6 overflow-y-auto custom-scrollbar flex-1 space-y-8 bg-slate-50/30">
+                            <section>
+                                <p className="text-slate-700 leading-relaxed font-medium text-[15px]">{problem.description}</p>
+                            </section>
 
-                                <div>
-                                    <h3 className="text-lg font-semibold text-gray-800 mb-2">Output Format</h3>
-                                    <p className="text-gray-700 leading-relaxed">{problem.outputFormat}</p>
+                            <section className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div> Input Format
+                                    </h3>
+                                    <p className="text-slate-700 text-sm whitespace-pre-line font-mono">{problem.inputFormat}</p>
                                 </div>
+                                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div> Output Format
+                                    </h3>
+                                    <p className="text-slate-700 text-sm font-mono">{problem.outputFormat}</p>
+                                </div>
+                            </section>
 
-                                <div>
-                                    <h3 className="text-lg font-semibold text-gray-800 mb-2">Examples</h3>
-                                    {problem.examples.map((example, idx) => (
-                                        <div key={idx} className="mb-4">
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <div>
-                                                    <p className="text-sm font-medium text-gray-600 mb-1">Input</p>
-                                                    <pre className="bg-gray-100 p-3 rounded text-sm font-mono whitespace-pre overflow-x-auto">
-                                                        {example.input}
-                                                    </pre>
-                                                </div>
-                                                <div>
-                                                    <p className="text-sm font-medium text-gray-600 mb-1">Output</p>
-                                                    <pre className="bg-gray-100 p-3 rounded text-sm font-mono whitespace-pre overflow-x-auto">
-                                                        {example.output}
-                                                    </pre>
-                                                </div>
-                                                <div>
-                                                    <p className="text-sm font-medium text-gray-600 mb-1">Explanation</p>
-                                                    <pre className=" p-3 rounded text-sm font-mono whitespace-pre overflow-x-auto">
-                                                        {example.explanation}
-                                                    </pre>
-                                                </div>
+                            <section>
+                                <h3 className="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                    <Lightbulb className="text-amber-500" size={18} /> Examples
+                                </h3>
+                                {problem.examples.map((example, idx) => (
+                                    <div key={idx} className="mb-6 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                                        <div className="bg-slate-50/80 px-4 py-2.5 border-b border-slate-100 flex justify-between items-center">
+                                            <span className="text-xs font-extrabold text-slate-500 uppercase tracking-wider">Example {idx + 1}</span>
+                                            <button className="text-slate-400 hover:text-blue-600 text-xs font-semibold transition-colors">Copy</button>
+                                        </div>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+                                            <div className="p-5">
+                                                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3 block">Input</span>
+                                                <pre className="text-slate-800 text-sm font-mono whitespace-pre-wrap">{example.input}</pre>
+                                            </div>
+                                            <div className="p-5">
+                                                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3 block">Output</span>
+                                                <pre className="text-slate-800 text-sm font-mono whitespace-pre-wrap">{example.output}</pre>
+                                            </div>
+                                        </div>
+                                        {example.explanation && (
+                                            <div className="p-5 bg-blue-50/30 border-t border-slate-100">
+                                                <span className="text-[11px] font-bold text-blue-400 uppercase tracking-widest mb-2 block">Explanation</span>
+                                                <p className="text-slate-600 text-sm">{example.explanation}</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </section>
+                        </div>
+
+                        {/* Problem Footer / Action Bar */}
+                        <div className="p-4 border-t border-slate-100 bg-white shrink-0 flex items-center justify-between">
+                            <div className="flex items-center gap-1">
+                                <button className="flex items-center gap-1.5 p-2 hover:bg-slate-50 text-slate-500 hover:text-emerald-600 rounded-lg transition-colors text-sm font-semibold">
+                                    <ThumbsUp size={16} /> 124
+                                </button>
+                                <button className="flex items-center gap-1.5 p-2 hover:bg-slate-50 text-slate-500 hover:text-rose-600 rounded-lg transition-colors text-sm font-semibold">
+                                    <ThumbsDown size={16} /> 12
+                                </button>
+                            </div>
+                            <button className="flex items-center gap-2 p-2 hover:bg-slate-50 text-slate-500 hover:text-blue-600 rounded-lg transition-colors text-sm font-semibold">
+                                <Share2 size={16} /> Share
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* RIGHT PANE: Code Editor */}
+                    <div className="bg-white rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] ring-1 ring-slate-200/60 overflow-hidden flex flex-col h-[80vh]">
+                        {/* IDE Top Toolbar */}
+                        <div className="p-3 border-b border-slate-100 bg-slate-50/50 shrink-0 flex justify-between items-center">
+                            <div className="flex items-center gap-3 pl-2">
+                                <Terminal size={18} className="text-blue-600" />
+                                <select
+                                    value={language}
+                                    onChange={(e) => setLanguage(e.target.value)}
+                                    className="bg-white border border-slate-200 text-slate-800 text-sm font-bold rounded-lg px-3 py-1.5 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all cursor-pointer shadow-sm"
+                                >
+                                    <option value="CPP">C++</option>
+                                    <option value="PYTHON">Python 3</option>
+                                    <option value="JAVA">Java</option>
+                                </select>
+                            </div>
+                            
+                            {/* IDE Actions */}
+                            <div className="flex items-center gap-1 pr-2">
+                                <button className="p-2 hover:bg-white border border-transparent hover:border-slate-200 rounded-lg text-slate-400 hover:text-slate-700 transition-all shadow-sm">
+                                    <RotateCcw size={16} />
+                                </button>
+                                <button className="p-2 hover:bg-white border border-transparent hover:border-slate-200 rounded-lg text-slate-400 hover:text-slate-700 transition-all shadow-sm">
+                                    <Settings size={16} />
+                                </button>
+                                <button className="p-2 hover:bg-white border border-transparent hover:border-slate-200 rounded-lg text-slate-400 hover:text-slate-700 transition-all shadow-sm">
+                                    <Maximize2 size={16} />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Editor Area with Faux Gutter */}
+                        <div className="flex-1 flex bg-slate-50/30 overflow-hidden relative">
+                            {/* Faux Line Numbers (Just visual detail) */}
+                            <div className="w-12 bg-slate-50 border-r border-slate-100 flex flex-col items-end py-6 pr-3 text-xs font-mono text-slate-300 select-none hidden sm:flex">
+                                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                            </div>
+                            
+                            <textarea
+                                value={code}
+                                onChange={(e) => setCode(e.target.value)}
+                                placeholder="// Write your solution here..."
+                                className="w-full h-full bg-transparent p-6 text-slate-800 font-mono text-sm resize-none focus:outline-none custom-scrollbar placeholder:text-slate-300 leading-relaxed"
+                                spellCheck="false"
+                            />
+                        </div>
+
+                        {/* Editor Status Bar */}
+                        <div className="px-4 py-1.5 bg-slate-50 border-t border-slate-100 shrink-0 flex justify-between items-center text-[10px] font-mono text-slate-400 uppercase tracking-widest">
+                            <div className="flex gap-4">
+                                <span>UTF-8</span>
+                                <span>Spaces: 4</span>
+                            </div>
+                            <span>Ln 1, Col 1</span>
+                        </div>
+
+                        {/* Run/Submit Footer */}
+                        <div className="p-4 border-t border-slate-200 bg-white shrink-0 flex justify-between items-center">
+                            <button className="text-slate-500 hover:text-slate-800 text-sm font-bold flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors">
+                                <Terminal size={16} /> Console
+                            </button>
+                            
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={handleRun}
+                                    disabled={isRunning}
+                                    className="group flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 disabled:bg-slate-50 disabled:text-slate-400 px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300"
+                                >
+                                    {isRunning ? <div className="w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin"></div> : <Play size={16} />}
+                                    Run
+                                </button>
+                                <button
+                                    disabled={isRunning}
+                                    className="group flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white disabled:bg-blue-300 px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 hover:-translate-y-0.5"
+                                >
+                                    <Send size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Console Results (Slides up) */}
+                        {testResults.length > 0 && (
+                            <div className="border-t border-slate-200 bg-white max-h-[40%] overflow-y-auto custom-scrollbar animate-in slide-in-from-bottom-2 duration-300 shadow-[0_-20px_40px_rgba(0,0,0,0.08)]">
+                                <div className="p-4 border-b border-slate-100 flex items-center gap-3 bg-slate-50">
+                                    {verdict === "Accepted" || verdict === "All Testcase Passed" ? (
+                                        <div className="bg-emerald-100 p-1.5 rounded-full"><Check size={16} className="text-emerald-600" /></div>
+                                    ) : (
+                                        <div className="bg-rose-100 p-1.5 rounded-full"><X size={16} className="text-rose-600" /></div>
+                                    )}
+                                    <h4 className={`font-bold text-sm uppercase tracking-widest ${verdict === "Accepted" || verdict === "All Testcase Passed" ? "text-emerald-600" : "text-rose-600"}`}>
+                                        {verdict}
+                                    </h4>
+                                </div>
+                                <div className="p-4 space-y-3 bg-slate-50/50">
+                                    {testResults.map((result) => (
+                                        <div key={result.id} className="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                                            <div className="flex items-center gap-3">
+                                                {result.passed ? (
+                                                    <span className="text-emerald-700 font-bold text-[10px] uppercase tracking-wider bg-emerald-50 border border-emerald-200 px-2 py-1 rounded">Pass</span>
+                                                ) : (
+                                                    <span className="text-rose-700 font-bold text-[10px] uppercase tracking-wider bg-rose-50 border border-rose-200 px-2 py-1 rounded">Fail</span>
+                                                )}
+                                                <span className="text-sm font-bold text-slate-700">{result.id}</span>
+                                            </div>
+                                            <div className="text-xs font-mono text-slate-500 flex gap-4 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100">
+                                                <span>⏱ {result.time}</span>
+                                                <span>💾 {result.memory}</span>
                                             </div>
                                         </div>
                                     ))}
                                 </div>
                             </div>
-                        </div>
-
-                        {/* Right Column: Code Editor */}
-                        <div className="bg-white rounded-lg shadow-md p-6 flex flex-col overflow-hidden" style={{ maxHeight: '85vh' }}>
-                            <div className="mb-4">
-                                <div className="flex justify-between items-center mb-2">
-                                    <h3 className="text-lg font-semibold text-gray-800">Code Editor</h3>
-                                    <select
-                                        value={language}
-                                        onChange={(e) => setLanguage(e.target.value)}
-                                        className="border border-gray-300 rounded px-3 py-1 text-sm focus:outline-none focus:border-blue-500"
-                                    >
-                                        <option value="CPP">C++</option>
-                                        <option value="PYTHON">Python</option>
-                                        <option value="JAVA">Java</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <textarea
-                                value={code}
-                                onChange={(e) => setCode(e.target.value)}
-                                placeholder="// Write your code here..."
-                                className="w-full p-4 border border-gray-300 rounded font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                style={{ height: '300px' }}
-                            />
-
-                            <button
-                                onClick={handleRun}
-                                disabled={isRunning}
-                                className="mt-4 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-semibold py-2 px-6 rounded flex items-center justify-center gap-2 transition-colors shrink-0"
-                            >
-                                <Play size={18} />
-                                {isRunning ? 'Running...' : 'Run Code'}
-                            </button>
-
-                            {/* --- 3. UPDATED RESULTS SECTION --- */}
-                            {testResults.length > 0 && (
-                                <div className="mt-4 border-t pt-4 overflow-y-auto flex-1">
-                                    <div className="flex items-center gap-2 mb-3">
-                                        {/* Dynamic Icon based on verdict */}
-                                        {verdict === "Accepted" || verdict === "All Testcase Passed" ? (
-                                            <Check size={20} className="text-green-600" />
-                                        ) : (
-                                            <X size={20} className="text-red-600" />
-                                        )}
-
-                                        {/* Dynamic Text and Color */}
-                                        <h4 className={`font-bold text-lg ${verdict === "Accepted" || verdict === "All Testcase Passed"
-                                            ? "text-green-600"
-                                            : "text-red-600"
-                                            }`}>
-                                            {verdict}
-                                        </h4>
-                                    </div>
-
-                                    <div className="bg-gray-50 rounded-lg p-3 space-y-2">
-                                        {testResults.map((result) => (
-                                            <div key={result.id} className="flex items-center justify-between">
-                                                <div className="flex items-center gap-2">
-                                                    {result.passed ? (
-                                                        <div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center">
-                                                            <Check size={14} className="text-white" />
-                                                        </div>
-                                                    ) : (
-                                                        <div className="w-5 h-5 rounded-full bg-red-500 flex items-center justify-center">
-                                                            <X size={14} className="text-white" />
-                                                        </div>
-                                                    )}
-                                                    <span className="text-sm text-gray-700">Test case {result.id}</span>
-                                                </div>
-                                                <div className="text-xs text-gray-500">
-                                                    {result.time} • {result.memory}
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-
-
-                                </div>
-                            )}
-                        </div>
+                        )}
                     </div>
-                )}
+                </div>
+            )}
 
-                {/* View 2: Submissions List */}
-                {activeTab === 'submissions' && (
-                    <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                        <div className="p-6 bg-linear-to-r from-green-50 to-blue-50 border-b">
-                            <h3 className="text-xl font-bold text-gray-800 mb-2">Successful Submissions</h3>
-                            <p className="text-sm text-gray-600">
-                                Click on any submission to view the code and attempt to hack it. Successful hacks earn you points!
+            {/* View 2: Submissions (Hacker Board) */}
+            {activeTab === 'submissions' && (
+                <div className="bg-white rounded-3xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] ring-1 ring-slate-200/60 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    {/* Header */}
+                    <div className="p-8 bg-gradient-to-br from-slate-50 to-blue-50/50 border-b border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div>
+                            <div className="flex items-center gap-3 mb-2">
+                                <div className="bg-white p-2.5 rounded-xl shadow-sm border border-slate-100">
+                                    <Zap className="text-amber-500" size={24} />
+                                </div>
+                                <h3 className="text-2xl font-extrabold text-slate-900 tracking-tight">The Hacker Board</h3>
+                            </div>
+                            <p className="text-sm text-slate-500 font-medium">
+                                Review successful submissions. Inject failing test cases to earn bounty points.
                             </p>
                         </div>
-                        <div className="overflow-x-auto">
-                            <table className="w-full">
-                                <thead className="bg-gray-50 border-b">
-                                    <tr>
-                                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Username</th>
-                                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Language</th>
-                                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Time</th>
-                                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Memory</th>
-                                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">When</th>
-                                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y">
-                                    {submissionList.map((submission) => (
-                                        <tr key={submission.id} className="hover:bg-gray-50 transition-colors">
-                                            <td className="px-6 py-4">
-                                                <span className="font-medium text-blue-600">{submission.username}</span>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <span className="text-gray-700">{submission.language}</span>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <span className="text-gray-700">{submission.executionTime}</span>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <span className="text-gray-700">{submission.memoryUsed}</span>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <span className="text-gray-600 text-sm">{submission.submittedAt}</span>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <button
-                                                    onClick={() => onSelectSubmission(submission)}
-                                                    className="flex items-center gap-1 text-orange-600 hover:text-orange-700 font-medium text-sm transition-colors"
-                                                >
-                                                    <Eye size={16} />
-                                                    View & Hack
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+
+                        {/* Faux Search & Filter Bar */}
+                        <div className="flex items-center gap-3 w-full md:w-auto">
+                            <div className="relative flex-1 md:w-64">
+                                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input 
+                                    type="text" 
+                                    placeholder="Search hackers..." 
+                                    className="w-full pl-9 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all shadow-sm"
+                                />
+                            </div>
+                            <button className="flex items-center justify-center p-2.5 bg-white border border-slate-200 rounded-xl text-slate-500 hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm shrink-0">
+                                <Filter size={18} />
+                            </button>
                         </div>
                     </div>
-                )}
-            </div>
+                    
+                    <div className="overflow-x-auto custom-scrollbar">
+                        <table className="w-full text-left border-collapse">
+                            <thead className="bg-slate-50/80 border-b border-slate-200">
+                                <tr>
+                                    <th className="px-8 py-4 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Hacker</th>
+                                    <th className="px-8 py-4 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Stack</th>
+                                    <th className="px-8 py-4 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Performance</th>
+                                    <th className="px-8 py-4 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest">Timestamp</th>
+                                    <th className="px-8 py-4 text-[11px] font-extrabold text-slate-400 uppercase tracking-widest text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100">
+                                {submissionList.map((submission) => (
+                                    <tr key={submission.id} className="hover:bg-slate-50/50 transition-colors group">
+                                        <td className="px-8 py-5">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 border border-blue-200 flex items-center justify-center">
+                                                    <span className="text-blue-700 font-bold text-xs">{submission.username.charAt(0).toUpperCase()}</span>
+                                                </div>
+                                                <span className="font-bold text-slate-800">{submission.username}</span>
+                                            </div>
+                                        </td>
+                                        <td className="px-8 py-5">
+                                            <span className="text-slate-600 font-mono text-xs font-bold bg-white px-2.5 py-1.5 rounded-lg border border-slate-200 shadow-sm">{submission.language}</span>
+                                        </td>
+                                        <td className="px-8 py-5">
+                                            <div className="flex flex-col gap-1">
+                                                <span className="text-emerald-600 font-mono text-sm font-bold flex items-center gap-1"><Play size={12} className="text-emerald-400"/> {submission.executionTime}</span>
+                                                <span className="text-slate-500 font-mono text-xs">{submission.memoryUsed}</span>
+                                            </div>
+                                        </td>
+                                        <td className="px-8 py-5">
+                                            <span className="text-slate-400 text-xs font-semibold bg-slate-50 px-2.5 py-1 rounded-md">{submission.submittedAt}</span>
+                                        </td>
+                                        <td className="px-8 py-5 text-right">
+                                            <button
+                                                onClick={() => onSelectSubmission(submission)}
+                                                className="inline-flex items-center gap-2 text-amber-600 hover:text-white bg-white hover:bg-amber-500 border border-amber-200 hover:border-amber-500 px-4 py-2 rounded-xl font-bold text-xs transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-amber-500/20 group-hover:-translate-y-0.5"
+                                            >
+                                                <Eye size={14} />
+                                                Hack Logic
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
