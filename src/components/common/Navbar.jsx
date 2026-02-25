@@ -1,19 +1,21 @@
 import React from 'react';
 import { User, LogOut, LogIn, TerminalSquare } from 'lucide-react';
+import computeXLogo from '../../assets/image.png';
 
 export default function Navbar({ isLoggedIn, username, onLogout, onAuthClick }) {
   return (
     <nav className="sticky top-0 z-50 w-full bg-white/70 dark:bg-slate-950/70 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-        
+
         {/* Logo Section */}
         <div className="flex items-center gap-2 sm:gap-3 cursor-pointer group shrink-0">
-          <div className="bg-linear-to-br from-blue-600 to-indigo-600 dark:from-blue-500 dark:to-indigo-500 p-2 sm:p-2.5 rounded-lg sm:rounded-xl shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform duration-300">
-            <TerminalSquare className="text-white w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />
-          </div>
-          
+          <img
+            src={computeXLogo}
+            alt="ComputeX Logo"
+            className="h-8 sm:h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+          />
+
           <div className="flex flex-col justify-center">
-            {/* Text gradient flips to lighter, glowing blues in dark mode */}
             <h1 className="text-xl sm:text-3xl md:text-4xl font-extrabold bg-linear-to-r from-slate-900 via-blue-800 to-indigo-900 dark:from-white dark:via-blue-200 dark:to-indigo-300 bg-clip-text text-transparent tracking-tight leading-tight">
               ComputeX
             </h1>
@@ -37,7 +39,7 @@ export default function Navbar({ isLoggedIn, username, onLogout, onAuthClick }) 
                   {username}
                 </span>
               </div>
-              
+
               {/* Sleek Logout Button */}
               <button
                 onClick={onLogout}
@@ -55,7 +57,7 @@ export default function Navbar({ isLoggedIn, username, onLogout, onAuthClick }) 
               onClick={onAuthClick}
               className="group relative flex items-center gap-1.5 sm:gap-2 bg-slate-900 dark:bg-white hover:bg-slate-800 dark:hover:bg-slate-100 text-white dark:text-slate-900 px-4 py-2 sm:px-6 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 shadow-lg hover:shadow-slate-900/20 dark:hover:shadow-white/20 hover:-translate-y-0.5"
             >
-              <LogIn className="w-4 h-4 sm:w-[18px] sm:h-[18px] group-hover:translate-x-0.5 transition-transform duration-300 shrink-0" />
+              <LogIn className="w-4 h-4 sm:w-4.5 sm:h-4.5 group-hover:translate-x-0.5 transition-transform duration-300 shrink-0" />
               <span>Sign In</span>
               <div className="absolute inset-0 rounded-lg sm:rounded-xl ring-1 ring-inset ring-white/10 dark:ring-black/10 pointer-events-none"></div>
             </button>
