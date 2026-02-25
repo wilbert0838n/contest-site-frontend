@@ -16,9 +16,9 @@ import { API_BASE_URL } from './config';
 
 // --- Magic UI Imports ---
 import { Particles } from "./components/ui/particles";
+import { ParticlesBackground } from "./components/lightswind/particles-background"
 import { AnimatedSpan, Terminal, TypingAnimation } from "./components/ui/terminal";
 import { BentoCard, BentoGrid } from "./components/ui/bento-grid";
-
 
 // --- Mock Data ---
 const initialWeeks = [
@@ -27,29 +27,6 @@ const initialWeeks = [
 ];
 
 // --- Bento Grid Data ---
-const files = [
-  {
-    name: "bitcoin.pdf",
-    body: "Bitcoin is a cryptocurrency invented in 2008 by an unknown person or group of people using the name Satoshi Nakamoto.",
-  },
-  {
-    name: "finances.xlsx",
-    body: "A spreadsheet or worksheet is a file made of rows and columns that help sort data, arrange data easily, and calculate numerical data.",
-  },
-  {
-    name: "logo.svg",
-    body: "Scalable Vector Graphics is an Extensible Markup Language-based vector image format for two-dimensional graphics with support for interactivity and animation.",
-  },
-  {
-    name: "keys.gpg",
-    body: "GPG keys are used to encrypt and decrypt email, files, directories, and whole disk partitions and to authenticate messages.",
-  },
-  {
-    name: "seed.txt",
-    body: "A seed phrase, seed recovery phrase or backup seed phrase is a list of words which store all the information needed to recover Bitcoin funds on-chain.",
-  },
-];
-
 const features = [
   {
     Icon: TerminalIcon,
@@ -57,7 +34,7 @@ const features = [
     description: "Write, test, and execute your logic in our high-performance IDE with instant console feedback.",
     href: "#",
     cta: "Enter Arena",
-    className: "col-span-3 lg:col-span-2",
+    className: "col-span-1 lg:col-span-2",
     background: (
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Subtle grid background */}
@@ -65,20 +42,20 @@ const features = [
         <div className="absolute -top-32 -right-32 w-[30rem] h-[30rem] bg-blue-500/10 rounded-full blur-[100px]" />
         
         {/* Ultra-Premium Glassmorphic IDE */}
-        <div className="absolute top-1/2 -translate-y-1/2 right-4 lg:right-8 w-64 lg:w-[340px] bg-slate-900/95 backdrop-blur-2xl rounded-2xl shadow-[0_30px_60px_-15px_rgba(59,130,246,0.4)] border border-slate-700/50 flex flex-col overflow-hidden transform group-hover:-translate-y-3 group-hover:-translate-x-4 group-hover:rotate-[-2deg] transition-all duration-700 ease-out">
-           <div className="h-9 bg-slate-800/80 border-b border-slate-700/80 flex items-center justify-between px-4">
-             <div className="flex gap-2">
-               <div className="w-2.5 h-2.5 rounded-full bg-rose-500/90 shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div>
-               <div className="w-2.5 h-2.5 rounded-full bg-amber-500/90 shadow-[0_0_10px_rgba(245,158,11,0.5)]"></div>
-               <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/90 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div>
+        <div className="absolute top-1/2 -translate-y-1/2 -right-4 sm:right-4 lg:right-8 w-[85%] sm:w-64 lg:w-[340px] bg-slate-900/95 backdrop-blur-2xl rounded-2xl shadow-[0_30px_60px_-15px_rgba(59,130,246,0.4)] border border-slate-700/50 flex flex-col overflow-hidden transform group-hover:-translate-y-3 group-hover:-translate-x-4 group-hover:rotate-[-2deg] transition-all duration-700 ease-out">
+           <div className="h-8 sm:h-9 bg-slate-800/80 border-b border-slate-700/80 flex items-center justify-between px-3 sm:px-4 shrink-0">
+             <div className="flex gap-1.5 sm:gap-2">
+               <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-rose-500/90 shadow-[0_0_10px_rgba(244,63,94,0.5)]"></div>
+               <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-amber-500/90 shadow-[0_0_10px_rgba(245,158,11,0.5)]"></div>
+               <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-emerald-500/90 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div>
              </div>
-             <span className="text-[10px] text-slate-400 font-mono font-medium tracking-wider">solution.cpp</span>
+             <span className="text-[9px] sm:text-[10px] text-slate-400 font-mono font-medium tracking-wider">solution.cpp</span>
            </div>
-           <div className="p-5 text-[11px] lg:text-xs font-mono text-slate-300 flex flex-col gap-2.5">
-             <div className="flex gap-2"><span className="text-blue-400 font-bold">auto</span><span className="text-amber-300">solve</span><span>() -{'>'}</span><span className="text-emerald-400 font-bold">void</span><span> {'{'}</span></div>
-             <div className="pl-4 flex gap-2 text-slate-500 italic">// optimized for O(n) runtime</div>
-             <div className="pl-4 flex gap-2"><span className="text-blue-400 font-bold">for</span><span>(</span><span className="text-emerald-400">int</span><span> i = 0; i &lt; n; ++i) {'{'}</span></div>
-             <div className="pl-8 flex gap-2 items-center"><span className="text-purple-400">dp</span><span>[i] = </span><span className="text-amber-300">max</span><span>(dp[i], val);</span><span className="inline-block w-1.5 h-4 bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.8)] ml-0.5"></span></div>
+           <div className="p-4 sm:p-5 text-[10px] sm:text-[11px] lg:text-xs font-mono text-slate-300 flex flex-col gap-2 sm:gap-2.5 overflow-hidden">
+             <div className="flex gap-2 whitespace-nowrap"><span className="text-blue-400 font-bold">auto</span><span className="text-amber-300">solve</span><span>() -{'>'}</span><span className="text-emerald-400 font-bold">void</span><span> {'{'}</span></div>
+             <div className="pl-4 flex gap-2 text-slate-500 italic whitespace-nowrap">// optimized for O(n) runtime</div>
+             <div className="pl-4 flex gap-2 whitespace-nowrap"><span className="text-blue-400 font-bold">for</span><span>(</span><span className="text-emerald-400">int</span><span> i = 0; i &lt; n; ++i) {'{'}</span></div>
+             <div className="pl-8 flex gap-2 items-center whitespace-nowrap"><span className="text-purple-400">dp</span><span>[i] = </span><span className="text-amber-300">max</span><span>(dp[i], val);</span><span className="inline-block w-1.5 h-3 sm:h-4 bg-blue-500 animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.8)] ml-0.5"></span></div>
              <div className="pl-4">{'}'}</div>
              <div>{'}'}</div>
            </div>
@@ -92,36 +69,36 @@ const features = [
     description: "Watch the rankings shift in real-time as submissions roll in.",
     href: "#",
     cta: "View Rankings",
-    className: "col-span-3 lg:col-span-1",
+    className: "col-span-1 lg:col-span-1",
     background: (
-      <div className="absolute inset-0 overflow-hidden pointer-events-none flex items-center justify-end pr-8 lg:pr-12">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none flex items-center justify-end pr-4 sm:pr-8 lg:pr-12">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
         <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-emerald-500/10 rounded-full blur-[80px]" />
         
         {/* Dynamic Leaderboard Stack */}
-        <div className="w-48 lg:w-56 flex flex-col gap-3 transform group-hover:-translate-y-4 group-hover:scale-105 transition-all duration-700 ease-out z-10">
+        <div className="w-40 sm:w-48 lg:w-56 flex flex-col gap-2.5 sm:gap-3 transform group-hover:-translate-y-4 group-hover:scale-105 transition-all duration-700 ease-out z-10">
           {/* 1st Place */}
-          <div className="h-14 rounded-2xl bg-white/90 backdrop-blur-sm shadow-[0_15px_30px_-5px_rgba(16,185,129,0.3)] border border-emerald-200 flex items-center px-4 gap-3 relative overflow-hidden group/item">
+          <div className="h-12 sm:h-14 rounded-2xl bg-white/90 backdrop-blur-sm shadow-[0_15px_30px_-5px_rgba(16,185,129,0.3)] border border-emerald-200 flex items-center px-3 sm:px-4 gap-2.5 sm:gap-3 relative overflow-hidden group/item">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-100/50 to-transparent -translate-x-full group-hover:translate-x-full duration-1000 transition-transform"></div>
-            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-yellow-300 to-amber-500 flex items-center justify-center text-[11px] font-extrabold text-white shadow-sm ring-2 ring-white">1</div>
-            <div className="flex-1 flex flex-col gap-2">
-              <div className="flex justify-between items-center"><div className="h-2 w-16 bg-slate-800 rounded-full"></div><div className="text-[10px] font-extrabold text-emerald-600">2840</div></div>
+            <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gradient-to-br from-yellow-300 to-amber-500 flex items-center justify-center text-[10px] sm:text-[11px] font-extrabold text-white shadow-sm ring-2 ring-white shrink-0">1</div>
+            <div className="flex-1 flex flex-col gap-1.5 sm:gap-2 min-w-0">
+              <div className="flex justify-between items-center"><div className="h-2 w-12 sm:w-16 bg-slate-800 rounded-full"></div><div className="text-[9px] sm:text-[10px] font-extrabold text-emerald-600">2840</div></div>
               <div className="h-1.5 w-full bg-emerald-100 rounded-full overflow-hidden"><div className="h-full w-[95%] bg-emerald-500 rounded-full"></div></div>
             </div>
           </div>
           {/* 2nd Place */}
-          <div className="h-12 rounded-xl bg-white/80 backdrop-blur-sm shadow-lg border border-slate-100 flex items-center px-4 gap-3 ml-2 opacity-90">
-            <div className="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-500 ring-2 ring-white">2</div>
-            <div className="flex-1 flex flex-col gap-2">
-              <div className="flex justify-between items-center"><div className="h-2 w-12 bg-slate-400 rounded-full"></div><div className="text-[9px] font-bold text-slate-500">2710</div></div>
+          <div className="h-10 sm:h-12 rounded-xl bg-white/80 backdrop-blur-sm shadow-lg border border-slate-100 flex items-center px-3 sm:px-4 gap-2.5 sm:gap-3 ml-2 opacity-90">
+            <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-slate-200 flex items-center justify-center text-[9px] sm:text-[10px] font-bold text-slate-500 ring-2 ring-white shrink-0">2</div>
+            <div className="flex-1 flex flex-col gap-1.5 sm:gap-2 min-w-0">
+              <div className="flex justify-between items-center"><div className="h-2 w-10 sm:w-12 bg-slate-400 rounded-full"></div><div className="text-[8px] sm:text-[9px] font-bold text-slate-500">2710</div></div>
               <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden"><div className="h-full w-[80%] bg-slate-400 rounded-full"></div></div>
             </div>
           </div>
           {/* 3rd Place */}
-          <div className="h-10 rounded-xl bg-white/60 backdrop-blur-sm shadow-md border border-slate-100 flex items-center px-4 gap-3 ml-4 opacity-70">
-            <div className="w-5 h-5 rounded-full bg-slate-200 flex items-center justify-center text-[9px] font-bold text-slate-400 ring-2 ring-white">3</div>
-            <div className="flex-1 flex flex-col gap-1.5">
-              <div className="flex justify-between items-center"><div className="h-1.5 w-10 bg-slate-300 rounded-full"></div></div>
+          <div className="h-8 sm:h-10 rounded-xl bg-white/60 backdrop-blur-sm shadow-md border border-slate-100 flex items-center px-3 sm:px-4 gap-2.5 sm:gap-3 ml-4 opacity-70">
+            <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-slate-200 flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-slate-400 ring-2 ring-white shrink-0">3</div>
+            <div className="flex-1 flex flex-col gap-1 sm:gap-1.5 min-w-0">
+              <div className="flex justify-between items-center"><div className="h-1.5 w-8 sm:w-10 bg-slate-300 rounded-full"></div></div>
               <div className="h-1 w-full bg-slate-100 rounded-full overflow-hidden"><div className="h-full w-[60%] bg-slate-300 rounded-full"></div></div>
             </div>
           </div>
@@ -135,14 +112,14 @@ const features = [
     description: "Review successful code, inject failing test cases, and earn bounty points for breaking logic.",
     href: "#",
     cta: "Start Hacking",
-    className: "col-span-3 lg:col-span-1",
+    className: "col-span-1 lg:col-span-1",
     background: (
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
         <div className="absolute bottom-0 right-0 w-64 h-64 bg-rose-500/10 rounded-full blur-[80px]" />
         
-        {/* Vulnerability Scanner Grid - Scaled down and pinned strictly to the bottom right */}
-        <div className="absolute -bottom-4 -right-4 lg:-bottom-6 lg:-right-6 w-36 h-36 lg:w-40 lg:h-40 bg-white/40 backdrop-blur-xl border border-white/60 rounded-2xl shadow-xl p-2 grid grid-cols-2 gap-2 transform group-hover:rotate-6 group-hover:scale-110 group-hover:-translate-x-2 group-hover:-translate-y-2 transition-all duration-700 ease-out z-10">
+        {/* Vulnerability Scanner Grid */}
+        <div className="absolute -bottom-4 -right-4 lg:-bottom-6 lg:-right-6 w-32 h-32 sm:w-36 sm:h-36 lg:w-40 lg:h-40 bg-white/40 backdrop-blur-xl border border-white/60 rounded-2xl shadow-xl p-2 grid grid-cols-2 gap-2 transform group-hover:rotate-6 group-hover:scale-110 group-hover:-translate-x-2 group-hover:-translate-y-2 transition-all duration-700 ease-out z-10">
            <div className="bg-slate-100/80 rounded-xl border border-white"></div>
            <div className="bg-slate-100/80 rounded-xl border border-white"></div>
            
@@ -161,7 +138,7 @@ const features = [
     Icon: Globe,
     name: "Global Rating System",
     description: "Compete against engineers worldwide and climb the global Elo tiers.",
-    className: "col-span-3 lg:col-span-2",
+    className: "col-span-1 lg:col-span-2",
     href: "#",
     cta: "See Top Coders",
     background: (
@@ -183,10 +160,10 @@ const features = [
            </svg>
            
            {/* Floating Rank Nodes */}
-           <div className="absolute right-[5%] top-[10%] w-5 h-5 bg-indigo-500 rounded-full shadow-[0_0_30px_rgba(99,102,241,1)] animate-pulse ring-4 ring-white"></div>
-           <div className="absolute right-[5%] top-[10%] w-12 h-12 bg-indigo-500/20 rounded-full animate-ping"></div>
+           <div className="absolute right-[5%] top-[10%] w-4 h-4 sm:w-5 sm:h-5 bg-indigo-500 rounded-full shadow-[0_0_30px_rgba(99,102,241,1)] animate-pulse ring-4 ring-white"></div>
+           <div className="absolute right-[5%] top-[10%] w-10 h-10 sm:w-12 sm:h-12 bg-indigo-500/20 rounded-full animate-ping"></div>
            
-           <div className="absolute right-[8%] top-[0%] bg-white/90 backdrop-blur-md border border-indigo-100 px-4 py-2 rounded-xl shadow-xl shadow-indigo-500/20 text-xs font-extrabold text-indigo-700 transform group-hover:-translate-y-3 transition-transform duration-700">
+           <div className="absolute right-[8%] top-[0%] bg-white/90 backdrop-blur-md border border-indigo-100 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl shadow-xl shadow-indigo-500/20 text-[10px] sm:text-xs font-extrabold text-indigo-700 transform group-hover:-translate-y-3 transition-transform duration-700 whitespace-nowrap">
              Grandmaster <span className="text-emerald-500 ml-1">+24</span>
            </div>
         </div>
@@ -198,7 +175,7 @@ const features = [
 // --- Sub-Components ---
 export function TerminalDemo2() {
   return (
-    <Terminal>
+    <Terminal className="text-xs sm:text-sm">
       <TypingAnimation delay={0}>$ g++ -O3 solution.cpp -o solution</TypingAnimation>
       <AnimatedSpan delay={1200} className="text-slate-400">
         [1/1] Compiling target... done.
@@ -222,7 +199,7 @@ export function TerminalDemo2() {
 
 export function BentoDemo() {
   return (
-    <BentoGrid>
+    <BentoGrid className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-[22rem] gap-4">
       {features.map((feature, idx) => (
         <BentoCard key={idx} {...feature} />
       ))}
@@ -333,8 +310,7 @@ export default function App() {
   return (
     <div className="relative min-h-screen bg-slate-50 overflow-hidden font-sans">
       
-      <Particles className="absolute inset-0 z-0" quantity={120} ease={80} color="#0f172a" refresh />
-
+      <ParticlesBackground />
       <div className="relative z-10 flex flex-col min-h-screen w-full">
         {showAuthModal && (
           <AuthModal
@@ -364,83 +340,84 @@ export default function App() {
               onAuthClick={() => setShowAuthModal(true)}
             />
 
-            <div className="max-w-7xl mx-auto p-6 w-full flex-1 flex flex-col">
+            {/* Adjusted padding for mobile */}
+            <div className="max-w-7xl mx-auto p-4 sm:p-6 w-full flex-1 flex flex-col">
               
               {/* --- TOP LEVEL NAVIGATION --- */}
-              <div className="flex justify-center mb-10">
-                <div className="bg-white/60 backdrop-blur-xl border border-white/40 rounded-2xl shadow-sm p-1.5 inline-flex w-full sm:w-auto">
+              <div className="flex justify-start sm:justify-center mb-6 sm:mb-10 overflow-x-auto pb-2 custom-scrollbar">
+                <div className="bg-white/60 backdrop-blur-xl border border-white/40 rounded-2xl shadow-sm p-1.5 flex flex-nowrap shrink-0 sm:w-auto">
                   <button
                     onClick={() => setMainTab('home')}
-                    className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-semibold transition-all duration-300 ${
+                    className={`flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300 whitespace-nowrap ${
                       mainTab === 'home'
                         ? 'bg-white shadow-md text-blue-600 scale-[1.02]'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'
                     }`}
                   >
-                    <Home size={18} /> Home
+                    <Home size={16} className="sm:w-[18px] sm:h-[18px]" /> Home
                   </button>
                   <button
                     onClick={() => setMainTab('contests')}
-                    className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-semibold transition-all duration-300 ${
+                    className={`flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300 whitespace-nowrap ${
                       mainTab === 'contests'
                         ? 'bg-white shadow-md text-blue-600 scale-[1.02]'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'
                     }`}
                   >
-                    <Code size={18} /> Contests
+                    <Code size={16} className="sm:w-[18px] sm:h-[18px]" /> Contests
                   </button>
                   <button
                     onClick={() => setMainTab('global-leaderboard')}
-                    className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl font-semibold transition-all duration-300 ${
+                    className={`flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300 whitespace-nowrap ${
                       mainTab === 'global-leaderboard'
                         ? 'bg-white shadow-md text-blue-600 scale-[1.02]'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'
                     }`}
                   >
-                    <Globe size={18} /> Global Leaderboard
+                    <Globe size={16} className="sm:w-[18px] sm:h-[18px]" /> Global Leaderboard
                   </button>
                 </div>
               </div>
 
               {/* --- ROUTE 1: HOME PAGE --- */}
               {mainTab === 'home' && (
-                <div className="flex-1 flex flex-col items-center w-full animate-in fade-in slide-in-from-bottom-4 duration-700 space-y-24 pb-20">
+                <div className="flex-1 flex flex-col items-center w-full animate-in fade-in slide-in-from-bottom-4 duration-700 space-y-16 sm:space-y-24 pb-12 sm:pb-20">
                   
                   {/* Hero Section */}
-                  <div className="w-full flex flex-col lg:flex-row items-center gap-12 mt-4 lg:mt-10">
-                    <div className="flex-1 text-center lg:text-left z-10">
-                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50/80 border border-blue-200 text-blue-700 text-sm font-bold mb-6 shadow-sm">
-                        <LayoutDashboard size={16} /> Welcome to the Arena
+                  <div className="w-full flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mt-2 lg:mt-10">
+                    <div className="flex-1 text-center lg:text-left z-10 w-full">
+                      <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-blue-50/80 border border-blue-200 text-blue-700 text-xs sm:text-sm font-bold mb-4 sm:mb-6 shadow-sm mx-auto lg:mx-0">
+                        <LayoutDashboard size={14} className="sm:w-4 sm:h-4" /> Welcome to the Arena
                       </div>
                       
-                      {/* UPDATED H1 WITH AURORA TEXT */}
-                      <h1 className="text-5xl lg:text-7xl font-extrabold text-slate-900 mb-6 tracking-tight leading-[1.1]">
+                      {/* Responsive Typography */}
+                      <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-slate-900 mb-4 sm:mb-6 tracking-tight leading-[1.1]">
                         Master Algorithms.<br/>
                         <AuroraText>Climb the Ranks.</AuroraText>
                       </h1>
                       
-                      <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto lg:mx-0 font-medium">
+                      <p className="text-base sm:text-lg lg:text-xl text-slate-600 mb-6 sm:mb-8 max-w-2xl mx-auto lg:mx-0 font-medium px-4 lg:px-0">
                         Jump into weekly contests, solve algorithmic challenges, and prove your engineering skills on the global leaderboard.
                       </p>
                       <button 
                         onClick={() => setMainTab('contests')}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-[0_10px_20px_-10px_rgba(37,99,235,0.5)] hover:shadow-[0_15px_25px_-10px_rgba(37,99,235,0.6)] hover:-translate-y-1"
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-bold text-base sm:text-lg transition-all shadow-[0_10px_20px_-10px_rgba(37,99,235,0.5)] hover:shadow-[0_15px_25px_-10px_rgba(37,99,235,0.6)] hover:-translate-y-1 w-full sm:w-auto"
                       >
                         Enter the Contests
                       </button>
                     </div>
 
                     {/* Terminal Display */}
-                    <div className="flex-1 w-full max-w-lg shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] rounded-xl transform rotate-1 hover:rotate-0 transition-transform duration-500">
+                    <div className="flex-1 w-full max-w-lg shadow-[0_20px_50px_-12px_rgba(0,0,0,0.2)] rounded-xl transform rotate-1 hover:rotate-0 transition-transform duration-500 mx-4 sm:mx-0">
                       <TerminalDemo2 />
                     </div>
                   </div>
 
                   {/* Bento Grid Section */}
                   <div className="w-full">
-                    <div className="text-center mb-12">
-                      <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Everything you need to succeed</h2>
-                      <p className="text-slate-600 text-lg font-medium">A fully-featured platform designed specifically for competitive programmers.</p>
+                    <div className="text-center mb-8 sm:mb-12 px-4">
+                      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 mb-3 sm:mb-4 tracking-tight">Everything you need to succeed</h2>
+                      <p className="text-slate-600 text-base sm:text-lg font-medium">A fully-featured platform designed specifically for competitive programmers.</p>
                     </div>
                     <BentoDemo />
                   </div>
@@ -449,10 +426,10 @@ export default function App() {
 
               {/* --- ROUTE 2: GLOBAL LEADERBOARD --- */}
               {mainTab === 'global-leaderboard' && (
-                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div className="mb-6 flex items-center gap-3">
-                    <Globe className="text-blue-600" size={28} />
-                    <h2 className="text-3xl font-bold text-slate-800 tracking-tight">Global Rankings</h2>
+                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 w-full">
+                  <div className="mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3 px-2 sm:px-0">
+                    <Globe className="text-blue-600 w-6 h-6 sm:w-7 sm:h-7" />
+                    <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">Global Rankings</h2>
                   </div>
                   <Leaderboard /> 
                 </div>
@@ -460,23 +437,23 @@ export default function App() {
 
               {/* --- ROUTE 3: CONTESTS WORKSPACE --- */}
               {mainTab === 'contests' && (
-                <div className="flex flex-col lg:flex-row gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
                   
-                  {/* LEFT SIDEBAR: Week Selector */}
+                  {/* LEFT SIDEBAR: Week Selector - Horizontal on mobile, vertical on desktop */}
                   <div className="w-full lg:w-64 shrink-0">
-                    <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 px-2">Available Contests</h3>
-                    <div className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
+                    <h3 className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-wider mb-3 sm:mb-4 px-2">Available Contests</h3>
+                    <div className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 custom-scrollbar">
                       {weeksData.map((week) => (
                         <button
                           key={week.id}
                           onClick={() => handleWeekSelect(week.id)}
-                          className={`flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all whitespace-nowrap text-left ${
+                          className={`flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl font-semibold text-sm sm:text-base transition-all whitespace-nowrap text-left shrink-0 ${
                             activeWeekId === week.id
                               ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20 scale-[1.02]'
                               : 'bg-white/60 backdrop-blur-md border border-white/40 text-slate-600 hover:bg-white hover:text-slate-900'
                           }`}
                         >
-                          <CalendarDays size={18} className={activeWeekId === week.id ? 'text-blue-200' : 'text-slate-400'} />
+                          <CalendarDays size={16} className={`sm:w-[18px] sm:h-[18px] ${activeWeekId === week.id ? 'text-blue-200' : 'text-slate-400'}`} />
                           <span className="truncate">{week.title}</span>
                         </button>
                       ))}
@@ -486,18 +463,18 @@ export default function App() {
                   {/* RIGHT AREA: Selected Week Content */}
                   <div className="flex-1 min-w-0">
                     {activeWeekData && (
-                      <div className="bg-white/70 backdrop-blur-xl border border-white/50 rounded-3xl shadow-xl overflow-hidden">
+                      <div className="bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden">
                         
                         {/* Selected Week Header & Internal Tabs */}
-                        <div className="border-b border-slate-200/50 bg-white/40 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                          <h2 className="text-2xl font-bold text-slate-800 tracking-tight flex items-center gap-2">
+                        <div className="border-b border-slate-200/50 bg-white/40 px-4 sm:px-6 py-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                          <h2 className="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight flex items-center gap-2 truncate">
                             {activeWeekData.title}
                           </h2>
                           
-                          <div className="flex bg-slate-200/50 p-1 rounded-xl w-full sm:w-auto">
+                          <div className="flex bg-slate-200/50 p-1 rounded-xl w-full md:w-auto">
                             <button
                               onClick={() => setWeekView('problems')}
-                              className={`flex-1 sm:flex-none px-4 py-1.5 rounded-lg text-sm font-bold transition-all ${
+                              className={`flex-1 px-3 sm:px-4 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${
                                 weekView === 'problems' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
                               }`}
                             >
@@ -505,25 +482,25 @@ export default function App() {
                             </button>
                             <button
                               onClick={() => setWeekView('weekly-leaderboard')}
-                              className={`flex-1 sm:flex-none px-4 py-1.5 rounded-lg text-sm font-bold transition-all ${
+                              className={`flex-1 px-3 sm:px-4 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${
                                 weekView === 'weekly-leaderboard' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
                               }`}
                             >
-                              Weekly Leaderboard
+                              Weekly Board
                             </button>
                           </div>
                         </div>
 
                         {/* WEEK VIEW: PROBLEMS */}
                         {weekView === 'problems' && (
-                          <div className="p-6">
-                            <div className="flex items-center gap-2 mb-6 overflow-x-auto pb-2">
-                              <div className="px-2 text-slate-400"><Filter size={16} /></div>
+                          <div className="p-4 sm:p-6">
+                            <div className="flex items-center gap-2 mb-4 sm:mb-6 overflow-x-auto pb-2 custom-scrollbar">
+                              <div className="px-1 sm:px-2 text-slate-400 shrink-0"><Filter size={16} /></div>
                               {categories.map((category) => (
                                 <button
                                   key={category}
                                   onClick={() => setProblemCategory(category)}
-                                  className={`px-4 py-1.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap border ${
+                                  className={`px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap border shrink-0 ${
                                     problemCategory === category
                                       ? 'bg-slate-800 text-white border-slate-800 shadow-md'
                                       : 'bg-white/50 border-white/60 text-slate-600 hover:bg-white hover:text-slate-900'
@@ -536,11 +513,11 @@ export default function App() {
 
                             <div className="space-y-3">
                               {loadingProblems ? (
-                                <div className="p-10 text-center text-slate-500 font-medium animate-pulse">
+                                <div className="p-6 sm:p-10 text-center text-slate-500 font-medium animate-pulse text-sm sm:text-base">
                                   Loading arena...
                                 </div>
                               ) : filteredProblems.length === 0 ? (
-                                <div className="p-10 text-center bg-slate-50/50 rounded-2xl border border-dashed border-slate-300 text-slate-500 font-medium">
+                                <div className="p-6 sm:p-10 text-center bg-slate-50/50 rounded-2xl border border-dashed border-slate-300 text-slate-500 font-medium text-sm sm:text-base">
                                   No {problemCategory} problems found in this contest.
                                 </div>
                               ) : (
@@ -548,31 +525,31 @@ export default function App() {
                                   <div
                                     key={problem.id}
                                     onClick={() => setSelectedProblem(problem)}
-                                    className="bg-white/60 border border-white/60 p-4 rounded-2xl hover:bg-white cursor-pointer transition-all duration-200 flex items-center justify-between group shadow-sm hover:shadow-md"
+                                    className="bg-white/60 border border-white/60 p-3 sm:p-4 rounded-2xl hover:bg-white cursor-pointer transition-all duration-200 flex items-center justify-between group shadow-sm hover:shadow-md"
                                   >
-                                    <div className="flex items-center gap-5 flex-1">
-                                      <div className="w-12 h-12 bg-gradient-to-br from-blue-50 to-indigo-100 border border-blue-100 rounded-xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300">
-                                        <span className="text-blue-700 font-bold text-lg">{problem.id}</span>
+                                    <div className="flex items-center gap-3 sm:gap-5 flex-1 min-w-0">
+                                      <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-gradient-to-br from-blue-50 to-indigo-100 border border-blue-100 rounded-xl flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300">
+                                        <span className="text-blue-700 font-bold text-base sm:text-lg">{problem.id}</span>
                                       </div>
 
-                                      <div className="flex-1">
-                                        <h3 className="font-semibold text-slate-800 mb-2 text-lg group-hover:text-blue-600 transition-colors">
+                                      <div className="flex-1 min-w-0">
+                                        <h3 className="font-semibold text-slate-800 mb-1 sm:mb-2 text-base sm:text-lg group-hover:text-blue-600 transition-colors truncate">
                                           {problem.problemName}
                                         </h3>
-                                        <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
-                                          <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${getDifficultyColor(problem.difficulty)}`}>
+                                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm text-slate-500">
+                                          <span className={`px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold ${getDifficultyColor(problem.difficulty)}`}>
                                             {problem.difficulty}
                                           </span>
-                                          <div className="flex items-center gap-1.5 bg-slate-100/50 px-2.5 py-0.5 rounded-full border border-slate-200/50 text-xs font-medium">
+                                          <div className="flex items-center gap-1 bg-slate-100/50 px-2 py-0.5 rounded-full border border-slate-200/50 text-[10px] sm:text-xs font-medium">
                                             <span className="text-emerald-500">✓</span> {problem.solved || 0} solved
                                           </div>
-                                          <div className={`flex items-center gap-1.5 bg-slate-100/50 px-2.5 py-0.5 rounded-full border border-slate-200/50 text-xs font-semibold ${getAccuracyColor(problem.accuracy)}`}>
+                                          <div className={`flex items-center gap-1 bg-slate-100/50 px-2 py-0.5 rounded-full border border-slate-200/50 text-[10px] sm:text-xs font-semibold ${getAccuracyColor(problem.accuracy)}`}>
                                             {problem.accuracy || 0}% accuracy
                                           </div>
                                         </div>
                                       </div>
                                     </div>
-                                    <ChevronRight size={20} className="text-slate-300 group-hover:text-blue-500 group-hover:translate-x-1 transition-all" />
+                                    <ChevronRight size={18} className="text-slate-300 group-hover:text-blue-500 group-hover:translate-x-1 transition-all shrink-0 ml-2 sm:ml-4 sm:w-5 sm:h-5" />
                                   </div>
                                 ))
                               )}
@@ -582,10 +559,10 @@ export default function App() {
 
                         {/* WEEK VIEW: WEEKLY LEADERBOARD */}
                         {weekView === 'weekly-leaderboard' && (
-                          <div className="p-6">
-                            <div className="mb-4 flex items-center gap-2 text-blue-600 bg-blue-50 px-4 py-2 rounded-lg border border-blue-100 inline-flex">
-                              <Trophy size={16} />
-                              <span className="font-semibold text-sm">Showing rankings for {activeWeekData.title}</span>
+                          <div className="p-4 sm:p-6">
+                            <div className="mb-4 flex items-center gap-2 text-blue-600 bg-blue-50 px-3 py-2 sm:px-4 sm:py-2 rounded-lg border border-blue-100 inline-flex w-full sm:w-auto overflow-hidden">
+                              <Trophy size={16} className="shrink-0" />
+                              <span className="font-semibold text-xs sm:text-sm truncate">Rankings for {activeWeekData.title}</span>
                             </div>
                             <Leaderboard contestId={activeWeekId} />
                           </div>

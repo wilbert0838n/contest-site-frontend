@@ -356,7 +356,7 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
                                 <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                                 <input 
                                     type="text" 
-                                    placeholder="Search developers..." 
+                                    placeholder="Search Thinkers..." 
                                     className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-slate-400 transition-colors"
                                 />
                             </div>
@@ -370,7 +370,7 @@ export default function ProblemWorkspace({ problem, onBack, onSelectSubmission, 
                         <table className="w-full text-left border-collapse">
                             <thead className="bg-slate-50 border-b border-slate-200">
                                 <tr>
-                                    <th className="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Developer</th>
+                                    <th className="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Thinkers</th>
                                     <th className="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Language</th>
                                     <th className="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Performance</th>
                                     <th className="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Submitted</th>
