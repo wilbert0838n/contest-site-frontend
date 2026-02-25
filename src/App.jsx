@@ -5,7 +5,6 @@ import {
   Terminal as TerminalIcon, Zap 
 } from 'lucide-react';
 
-import { CalendarIcon, FileTextIcon } from "@radix-ui/react-icons"; // Added from your Bento import
 import { AuroraText } from "./components/ui/aurora-text"; // Adjust the path if yours is in "@/registry/magicui/aurora-text"
 
 import Navbar from './components/common/Navbar';
